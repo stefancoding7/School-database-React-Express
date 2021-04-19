@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+
 
 export default class Courses extends Component  {
-
+    state = {
+        courses: []
+    }
+    componentDidMount() {
+        axios
+            .get(`http://localhost:5000/api/courses`)
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({
+                courses: data,
+                });
+            })
+            .catch((error) => {
+                console.log('Error: ', error);
+                
+                this.props.history.push('/error');
+            });
+        
+    }
+    
     render() {
         return (
+           
             <React.Fragment>
                 <main>
                     <div class="wrap main--grid">
                         <a class="course--module course--link" href="course-detail.html">
-                            <h2 class="course--label">Course</h2>
+                            <h2 class="course--label">{this.state.courses}</h2>
                             <h3 class="course--title">Build a Basic Bookcase</h3>
                         </a>
                         <a class="course--module course--link" href="course-detail.html">

@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import { BrowserRouter,  Switch, Route } from 'react-router-dom';
 
+import UserSignUp from './components/UserSignUp';
+
+import withContext from './Context';
+
 import Courses from './components/Courses';
+
+
+
+
+const UserSignUpWithContext = withContext(UserSignUp);
+
+
 
 /*
  * test connection to REST API
@@ -34,6 +45,8 @@ class App extends Component {
       <BrowserRouter>
       <div>
         <Route path="/api/courses" component={Courses} />
+        <Route path="/signup" component={UserSignUpWithContext} />
+
       </div>
           
       </BrowserRouter>

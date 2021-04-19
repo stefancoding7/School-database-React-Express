@@ -23,13 +23,12 @@ app.use(express.json());
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
-// Import cors library
-const cors = require('cors');
-
-// Enable all CORS Requests
-app.use(cors());
-
-
+// // setup a friendly greeting for the root route
+// app.get('/', (req, res) => {
+//   res.json({
+//     message: 'Welcome to the REST API project!',
+//   });
+// });
 
 app.use('/api', courseR);
 app.use('/api', userR);
