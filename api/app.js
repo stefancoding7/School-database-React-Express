@@ -2,6 +2,7 @@
 
 // load modules
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const courseR = require('./routes/course');
 const userR = require('./routes/user');
@@ -16,6 +17,8 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 // create the Express app
 const app = express();
 
+//enable use CORS
+app.use(cors());
 
 // Setup request body JSON parsing.
 app.use(express.json());

@@ -6,11 +6,14 @@ import UserSignUp from './components/UserSignUp';
 import withContext from './Context';
 
 import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
 
 
 
 
 const UserSignUpWithContext = withContext(UserSignUp);
+const CoursesWithContext = withContext(Courses);
+const DetailedCoursesWithContext = withContext(CourseDetail);
 
 
 
@@ -44,7 +47,8 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div>
-        <Route path="/api/courses" component={Courses} />
+        <Route exact path="/" component={CoursesWithContext} />
+        <Route path="/course/:id" component={DetailedCoursesWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
 
       </div>
