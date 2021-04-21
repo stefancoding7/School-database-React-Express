@@ -5,8 +5,8 @@ import axios from 'axios';
 export default class CourseDetail extends Component {
 
     state = {
-        course: []
-      
+        course: [],
+        user: []
     }
 
 
@@ -17,8 +17,8 @@ export default class CourseDetail extends Component {
         .then(data => {
             
             this.setState({ 
-              course: data.data
-              
+              course: data.data,
+              user: data.data.User
             })
             
            
@@ -33,10 +33,17 @@ export default class CourseDetail extends Component {
 }
 
     render() {
-    const  {course} = this.state.course;
+    const course = this.state;
     
-    console.log(course);
+    // console.log(Object.values(course));
     
+    /***
+     * Please help me
+     */
+    console.log(course.user);
+    /***
+     * Why is undefined?
+     */
     
     
         return(
