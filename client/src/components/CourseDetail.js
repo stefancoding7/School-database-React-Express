@@ -5,8 +5,8 @@ import axios from 'axios';
 export default class CourseDetail extends Component {
 
     state = {
-        course: [],
-        user: []
+        course: []
+      
     }
 
 
@@ -17,8 +17,8 @@ export default class CourseDetail extends Component {
         .then(data => {
             
             this.setState({ 
-              course: data.data, 
-              user: data.data
+              course: data.data
+              
             })
             
            
@@ -34,7 +34,7 @@ export default class CourseDetail extends Component {
 
     render() {
     const  {course} = this.state.course;
-    const user = this.state.user;
+    
     console.log(course);
     
     
