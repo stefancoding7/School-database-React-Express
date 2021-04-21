@@ -5,8 +5,8 @@ import axios from 'axios';
 export default class CourseDetail extends Component {
 
     state = {
-        course: [],
-        user: []
+        course: []
+        
     }
 
 
@@ -18,7 +18,7 @@ export default class CourseDetail extends Component {
             
             this.setState({ 
               course: data.data,
-              user: data.data.User
+              
             })
             
            
@@ -35,12 +35,43 @@ export default class CourseDetail extends Component {
     render() {
     const course = this.state;
     
-    // console.log(Object.values(course));
+
+    /***
+     * ---------> If I console log thisI get this object
+     * 
+     * 
+     * 
+        {…}
+        ​
+        course: {…}
+        ​​
+        course: (1) […]
+        ​​​
+        0: {…}
+        ​​​​
+        User: {…}
+        ​​​​​
+        emailAddress: "joe@smith.com"
+        ​​​​​
+        firstName: "Joe"
+        ​​​​​
+        id: 1
+        ​​​​​
+        lastName: "Smith"
+        ​​​​​
+        <prototype>: Object { … }
+        ​​​​
+        description: "High-end furniture projects are great to dream about. But unless you have a well-equipped shop and some serious woodworking experience to draw on, it can be difficult to turn the dream into a 
+     */
+    console.log(course);
     
+
+
+
     /***
      * Please help me
      */
-    console.log(course.user);
+    console.log(course.User);
     /***
      * Why is undefined?
      */
