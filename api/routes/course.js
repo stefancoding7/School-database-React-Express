@@ -54,11 +54,13 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
         "estimatedTime",
         "materialsNeeded",
     ],
-    include: 
+    include: [
       {
         model: Users,
         attributes: ["id", "firstName", "lastName", "emailAddress"],
       },
+    ],
+     
       where: {
           id: req.params.id
       }

@@ -12,12 +12,12 @@ export default class CourseDetail extends Component {
 
     componentDidMount() {
         const course = this.props.match.params;
-        console.log(course.id);
+       // console.log(course.id);
         axios(`http://localhost:5000/api/courses/${course.id}`)
         .then(data => {
             
             this.setState({ 
-              course: data.data,
+              course: data.data.course
               
             })
             
@@ -34,6 +34,9 @@ export default class CourseDetail extends Component {
 
     render() {
     const course = this.state;
+    console.log(course);
+    const { authenticatedUser } = this.props.context;
+    console.log(authenticatedUser.id);
     
 
     /***
@@ -63,7 +66,7 @@ export default class CourseDetail extends Component {
         ​​​​
         description: "High-end furniture projects are great to dream about. But unless you have a well-equipped shop and some serious woodworking experience to draw on, it can be difficult to turn the dream into a 
      */
-    console.log(course);
+   // console.log(course);
     
 
 
@@ -71,7 +74,7 @@ export default class CourseDetail extends Component {
     /***
      * Please help me
      */
-    console.log(course.User);
+    // console.log(course.User);
     /***
      * Why is undefined?
      */

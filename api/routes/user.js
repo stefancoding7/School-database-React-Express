@@ -23,6 +23,7 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
   
 //  console.log(user);
   res.status(200).json({
+    id: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
     emailAddress: user.emailAddress,
