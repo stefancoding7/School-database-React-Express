@@ -28,6 +28,7 @@ const asyncHandler = require('../middleware/asyncHandler')
       ],
       include: [
         {
+          as: 'userOwner',
           model: Users,
           attributes: ["id", "firstName", "lastName", "emailAddress"],
         }
@@ -45,34 +46,27 @@ const asyncHandler = require('../middleware/asyncHandler')
  * return the corresponding course along with the User that owns that 
  * course and a 200 HTTP status code
  */
-router.get('/courses/:id', asyncHandler(async (req, res) => {
-  const course = await Courses.findAll({
-    attributes: [
-        "id",
-        "title",
-        "description",
-        "estimatedTime",
-        "materialsNeeded",
-    ],
-    include: [
-      {
-        model: Users,
-        attributes: ["id", "firstName", "lastName", "emailAddress"],
+ router.get(
+  "/courses/:id",
+  asyncHandler(async (req, res) => {
+    const course = await Courses.findByPk(req.params.id, {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
       },
-    ],
-     
-      where: {
-          id: req.params.id
-      }
-    
-  });
-  
-  if(course) {
-    res.status(200).json({ course })
-  } else {
-    res.status(404).json({ message: "Course not found" })
-  }
-}));
+      include: [
+        {
+          model: Users,
+          as: "userOwner",
+          attributes: {
+            exclude: ["password", "createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
+
+    res.json(course);
+  })
+);
 
 
 /***
