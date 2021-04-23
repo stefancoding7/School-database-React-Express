@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default class UserSignUp extends Component {
+export default class CreateCourse extends Component {
     state = {
-        firstName: "",
-        lastName: "",
-        emailAddress: "",
-        password: "",
-        confirmedPassword: "",
+        title: "",
+        author: "",
+        description: "",
         errors: [],
       };
     
       render() {
+        const { context } = this.props;
+        const authUser = context.authenticatedUser;
+      
+
+
         const {
-          firstName,
-          lastName,
-          emailAddress,
-          password,
-          confirmedPassword,
+          title,
+          author,
+          description,
           errors,
         } = this.state;
     
@@ -34,51 +35,32 @@ export default class UserSignUp extends Component {
           submitButtonText="Create Course"
           elements={() => (
             <React.Fragment>
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="courseTitle">Course Title</label>
               <input
-                id="firstName"
-                name="firstName"
+                id="courseTitle"
+                name="title"
                 type="text"
-                value={firstName}
+                value={title}
                 onChange={this.change}
-                placeholder="Name"
+                placeholder="Title"
               />
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="courseAuthor">Course Author</label>
               <input
-                id="lastName"
-                name="lastName"
+                id="courseAuthor"
+                name="author"
                 type="text"
-                value={lastName}
+                value={author}
                 onChange={this.change}
-                placeholder="Name"
+                placeholder=""
               />
-              <label htmlFor="emailAddress">Email Address</label>
-              <input
-                id="emailAddress"
-                name="emailAddress"
-                type="email"
-                value={emailAddress}
+              <label htmlFor="courseDescription">Course Description</label>
+              <textarea
+                id="courseDescription"
+                name="description"
                 onChange={this.change}
-                placeholder="User Name"
-              />
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={this.change}
-                placeholder="Password"
-              />
-              <label htmlFor="confirmedPassword">Confirm Password</label>
-              <input
-                id="confirmedPassword"
-                name="confirmedPassword"
-                type="password"
-                value={confirmedPassword}
-                onChange={this.change}
-                placeholder="Confirm Password"
-              />
+                value={description}
+              ></textarea>
+              
               </React.Fragment>
             )} />
           <p>
@@ -101,28 +83,37 @@ export default class UserSignUp extends Component {
   }
 
   submit = () => {
-    
       const { context } = this.props;
-      const { firstName, lastName, emailAddress, password } = this.state;
+      const userId = context.authenticatedUser.id;
+      const  username  = context.authenticatedUser.emailAddress;
+      const { password } = context.authenticatedUser;
+      console.log(context);
+      
+      console.log(password);
+      const { history } = context;
+      const title = this.state.title;
+      const author = context.authenticatedUser.firstName;
+      const description = this.state.description;
+     
       
     
 
-      const user = {
-        firstName,
-        lastName,
-        emailAddress,
-        password,
-      };
+      const course = {
+        userId,
+        title,
+        author,
+        description,
 
-      context.data.createUser(user)
+      };
+      console.log(course);
+      context.data.createCourse(course, username, password)
       .then( errors => {
         if (errors.length) {
           this.setState({ errors });
         } else {
-          context.actions.signIn(emailAddress, password)
-            .then(() => {
-              this.props.history.push('/');    
-            })
+          
+              history.push('/');    
+           
 
         }
       })

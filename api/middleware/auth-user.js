@@ -17,7 +17,7 @@ const { Users } = require('../models');
 exports.authenticateUser = async (req, res, next) => {
     let message;
     const credentials = auth(req);
-
+ 
     if (credentials) {
         const user = await Users.findOne({
           where: { emailAddress: credentials.name },
@@ -32,10 +32,10 @@ exports.authenticateUser = async (req, res, next) => {
             // Store the user on the Request object.
             req.currentUser = user;
           } else {
-            message = "Authentication failure for username: ${user.username}";
+            message = `Authentication failure for username: ${user.firstName}`;
           }
         } else {
-          message = "User not found for: ${credentials.username}";
+          message = `User not found for: ${credentials.name}`;
         }
       } else {
         message = "Auth header not found";

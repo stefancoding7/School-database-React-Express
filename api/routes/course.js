@@ -75,11 +75,13 @@ const asyncHandler = require('../middleware/asyncHandler')
  */
 router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
   try{
+    
     const user = req.currentUser;
     
     req.body.userId = user.id;
     
     const course = await Courses.create(req.body);
+    
     res.location(`api/courses/${course.id}`);
     res.status(201).end()
   } catch(error){

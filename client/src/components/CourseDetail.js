@@ -46,7 +46,7 @@ export default class CourseDetail extends Component {
                  <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    {
+                    { authenticatedUser && 
                         user.id === authenticatedUser.id ? (
                             <>
                             <a className="button" href="update-course.html">Update Course</a>
