@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
+
 
 
 export default class CourseDetail extends Component {
@@ -34,6 +35,8 @@ export default class CourseDetail extends Component {
     
 }
 
+    
+
     render() {
     const { course } = this.state; 
     const { user } = this.state;
@@ -50,8 +53,13 @@ export default class CourseDetail extends Component {
                         user.id === authenticatedUser.id ? (
                             <>
                             <a className="button" href="update-course.html">Update Course</a>
-                            <a className="button" href="#">Delete Course</a>
-                            <a className="button button-secondary" href="index.html">Return to List</a>
+                            <button className="button" onClick={this.deleteCourse}>Delte Course</button>
+                            <Link
+                            to='/'
+                            className='button button-secondary'
+                            >
+                            Return List
+                            </Link>
                             </>    
                         ) : (
                             <Link
@@ -82,13 +90,13 @@ export default class CourseDetail extends Component {
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{ course.title }</h4>
                             <p>By { user.firstName + ' ' + user.lastName }</p>
-                            <p> { course.description } </p>
+                             { course.description } 
                             
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
-                            <ReactMarkdown>{ course.estimatedTime } </ReactMarkdown>
-
+                            <p>{ course.estimatedTime } </p>
+                                
                             <h3 className="course--detail--title">Materials Needed</h3>
                             <ul className="course--detail--list">
                                <ReactMarkdown>{ course.materialsNeeded }</ReactMarkdown> 
@@ -101,5 +109,21 @@ export default class CourseDetail extends Component {
         </React.Fragment>
            
         )
+    }
+
+    deleteCourse = () => {
+        const { context } = this.props;
+        const { history } = this.props; 
+        const id = this.state.course.id;
+        const username = context.authenticatedUser.emailAddress;
+        const { password } = context.authenticatedUser;
+        console.log('username:' + username);
+       context.data.deleteC(id, username, password)
+            .then(() => this.props.history.push('/'))  
+            .catch(err => {
+                console.log(err);
+                this.props.history.push('/error')
+            })                                                             //////
+        
     }
 }
