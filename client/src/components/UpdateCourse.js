@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
 
+
+
 export default class CreateCourse extends Component {
     state = {
         title: "",
@@ -11,47 +13,47 @@ export default class CreateCourse extends Component {
         estimatedTime: "",
         materialsNeeded: "",
         course: [],
-        user: [],
+        courseUser: [],
         errors: [],
       };
 
-      componentDidMount() {
-        const { context } = this.props;
+
+    componentDidMount() {
+        const { context, history } = this.props;
+        const courseId = this.props.match.params.id;
         const authUser = context.authenticatedUser;
-        const course = this.props.match.params;
        // console.log(course.id);
-        axios(`http://localhost:5000/api/courses/${course.id}`)
-        .then(data => {
+        axios(`http://localhost:5000/api/courses/${courseId}`)
+            .then(data => {
+                
+                this.setState({ 
+                title: data.data.title,
+                author: data.data.userOwner.firstName + ' ' + data.data.userOwner.lastName,
+                description: data.data.description,
+                estimatedTime: data.data.estimatedTime,
+                materialsNeeded: data.data.materialsNeeded,
+                course: data.data,
+                courseUser: data.data.userOwner
+                })
+                
+
+                const { courseUser } = this.state;
             
-            this.setState({ 
-              course: data.data,
-              user: data.data.userOwner
+                if(authUser.id !== courseUser.id) {
+                    history.push('/forebidden')
+                }
+            
             })
-            
-           if(this.state.user.id !== authUser.id) {
-               this.props.history.push('/forbidden')
-           }    
-        })
-        .catch((error) => {
-            this.props.history.push('/notfound');
-        })
-        
-        // .catch((error) => {
-        //     console.log('Error: ', error);
-            
-        //     this.props.history.push('/error');
-        // });
-       
-    
-}
-      
+    }
+
     
       render() {
         const { context } = this.props;
+        const { history } = this.props;
         const authUser = context.authenticatedUser;
         const userFullName = `${authUser.firstName} ${authUser.lastName}`
-        const { course } = this.state; 
-       
+        
+
         const {
           title,
           author,
@@ -70,7 +72,7 @@ export default class CreateCourse extends Component {
             cancel={this.cancel}
           errors={errors}
           submit={this.submit}
-          submitButtonText="Update Course"
+          submitButtonText="Create Course"
           elements={() => (
             <React.Fragment>
             <div className="main--flex">
@@ -80,7 +82,7 @@ export default class CreateCourse extends Component {
                     id="courseTitle"
                     name="title"
                     type="text"
-                    value={course.title}
+                    value={title}
                     onChange={this.change}
                     placeholder="Title"
                   />
@@ -89,7 +91,7 @@ export default class CreateCourse extends Component {
                     id="courseAuthor"
                     name="author"
                     type="text"
-                    value={userFullName}
+                    value={author}
                     onChange={this.change}
                     placeholder=""
                   />
@@ -98,7 +100,7 @@ export default class CreateCourse extends Component {
                     id="courseDescription"
                     name="description"
                     onChange={this.change}
-                    value={course.description}
+                    value={description}
                   ></textarea>
                     </div>
                 <div>
@@ -107,7 +109,7 @@ export default class CreateCourse extends Component {
                     id="estimatedTime"
                     name="estimatedTime"
                     type="text"
-                    value={course.estimatedTime}
+                    value={estimatedTime}
                     onChange={this.change}
                   />
                   <label htmlFor="materialsNeeded">Materials Needed</label>
@@ -115,7 +117,7 @@ export default class CreateCourse extends Component {
                     id="materialsNeeded"
                     name="materialsNeeded"
                     onChange={this.change}
-                    value={course.materialsNeeded}
+                    value={materialsNeeded}
                   ></textarea>
                 </div>
             </div>
@@ -143,15 +145,13 @@ export default class CreateCourse extends Component {
   }
 
   submit = () => {
-      const { context } = this.props;
-      const { history } = context;
+      const { context, history } = this.props;
+      
       const userId = context.authenticatedUser.id;
       const  username  = context.authenticatedUser.emailAddress;
       const { password } = context.authenticatedUser;
-      const {id}  = this.props.match.params;
-      console.log(context);
-      
-      console.log(password);
+      const id = this.props.match.params.id;
+      const { courseUser } = this.state;
       
       const { title, author, description, estimatedTime, materialsNeeded } = this.state;
 
@@ -165,22 +165,32 @@ export default class CreateCourse extends Component {
         estimatedTime,
         materialsNeeded
       };
-      console.log(course);
-      context.data.updateCourse(id, course, username, password)
-      .then( errors => {
-        if (errors.length) {
-          this.setState({ errors });
-        } else {
-          
-          this.props.history.push("/")
-           
+     
 
+      try {
+            if(userId === courseUser.id) {
+                context.data.updateCourse(id, course, username, password)
+                .then( errors => {
+                if (errors.length) {
+                    this.setState({ errors });
+                } else {
+                    
+                    this.props.history.push(`/course/${id}/update`)
+
+                }
+                })
+                .catch( err => { 
+                console.log(err);
+                this.props.history.push('/error'); // push to history stack
+                });  
+        } else {
+            this.props.history.push('/forebidden'); // push to history stack
         }
-      })
-      .catch( error => { 
-        console.log(error);
-        this.props.history.push('/error'); // push to history stack
-      });  
+      } catch(error){
+            this.props.history.push('/forebidden'); // push to history stack
+      }
+     
+      
      
  
   }

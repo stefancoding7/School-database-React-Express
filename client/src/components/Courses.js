@@ -41,8 +41,7 @@ export default class Courses extends Component  {
             
             </Link>
         ))
-console.log(courses);
-
+        
         return (
            
             <React.Fragment>

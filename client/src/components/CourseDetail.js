@@ -125,10 +125,10 @@ export default class CourseDetail extends Component {
         const { password } = context.authenticatedUser;
         console.log('username:' + username);
        context.data.deleteC(id, username, password)
-            .then(() => this.props.history.push('/'))  
+            .then(() => history.push('/'))  
             .catch(err => {
                 console.log(err);
-                this.props.history.push('/error')
+                history.push('/error')
             })                                                             //////
         
     }

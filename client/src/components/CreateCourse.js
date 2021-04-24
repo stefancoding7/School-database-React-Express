@@ -13,11 +13,11 @@ export default class CreateCourse extends Component {
       };
     
       render() {
-        const { context } = this.props;
-        const authUser = context.authenticatedUser;
-        const userFullName = `${authUser.firstName} ${authUser.lastName}`
+       // const { context } = this.props;
+        // const authUser = context.authenticatedUser;
+        // const userFullName = `${authUser.firstName} ${authUser.lastName}`
 
-
+  
         const {
           title,
           author,
@@ -55,7 +55,7 @@ export default class CreateCourse extends Component {
                     id="courseAuthor"
                     name="author"
                     type="text"
-                    value={userFullName}
+                    value={author}
                     onChange={this.change}
                     placeholder=""
                   />
@@ -110,7 +110,7 @@ export default class CreateCourse extends Component {
 
   submit = () => {
       const { context } = this.props;
-      const { history } = context;
+    //  const { history } = context;
       const userId = context.authenticatedUser.id;
       const  username  = context.authenticatedUser.emailAddress;
       const { password } = context.authenticatedUser;

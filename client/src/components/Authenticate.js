@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ context }) => {
+const fn = ({ context }) => {
     const authUser = context.authenticatedUser;
 
     return (
@@ -13,3 +13,5 @@ export default ({ context }) => {
     );
   
 }
+
+export default fn;

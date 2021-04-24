@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default (props) => {
+const fn = (props) => {
   const {
     cancel,
     errors,
@@ -52,3 +52,5 @@ function ErrorsDisplay({ errors }) {
 
   return errorsDisplay;
 }
+
+export default fn;
