@@ -17,8 +17,8 @@ export default class UserSignIn extends Component {
     } = this.state;
 
     return (
-      <div className="bounds">
-        <div className="grid-33 centered signin">
+      
+        <div className="form--centered">
           <h1>Sign In</h1>
           <Form 
             cancel={this.cancel}
@@ -47,7 +47,7 @@ export default class UserSignIn extends Component {
             Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
           </p>
         </div>
-      </div>
+     
     );
   }
 
@@ -62,6 +62,9 @@ export default class UserSignIn extends Component {
     });
   }
 
+  /***
+   * Submit signin form with authenticed user
+   */
   submit = () => {
         const { context } = this.props;
         const { username, password } = this.state;

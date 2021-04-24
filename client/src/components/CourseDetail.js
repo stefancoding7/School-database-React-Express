@@ -26,11 +26,11 @@ export default class CourseDetail extends Component {
              
            
         })
-        // .catch((error) => {
-        //     console.log('Error: ', error);
+        .catch((error) => {
+            console.log('Error: ', error);
             
-        //     this.props.history.push('/error');
-        // });
+            this.props.history.push('/notfound');
+        });
        
     
 }

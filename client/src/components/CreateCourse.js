@@ -3,31 +3,27 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class CreateCourse extends Component {
+    
     state = {
         title: "",
-        author: "",
         description: "",
         estimatedTime: "",
         materialsNeeded: "",
         errors: [],
       };
-    
+      
       render() {
-       // const { context } = this.props;
-        // const authUser = context.authenticatedUser;
-        // const userFullName = `${authUser.firstName} ${authUser.lastName}`
-
-  
+        const fullName = `${this.props.context.authenticatedUser.firstName} ${this.props.context.authenticatedUser.lastName}` 
         const {
           title,
-          author,
           description,
           estimatedTime,
           materialsNeeded,
           errors,
         } = this.state;
-    
-
+        
+        
+      
     return (
       <div className="wrap">
         
@@ -55,9 +51,10 @@ export default class CreateCourse extends Component {
                     id="courseAuthor"
                     name="author"
                     type="text"
-                    value={author}
+                    value={fullName}
                     onChange={this.change}
                     placeholder=""
+                    disabled
                   />
                   <label htmlFor="courseDescription">Course Description</label>
                   <textarea
@@ -97,6 +94,9 @@ export default class CreateCourse extends Component {
     );
   }
 
+  /***
+   * Change event for inputs
+   */
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -108,9 +108,12 @@ export default class CreateCourse extends Component {
     });
   }
 
+
+  /***
+   * Submit createCourse than send to API
+   */
   submit = () => {
       const { context } = this.props;
-    //  const { history } = context;
       const userId = context.authenticatedUser.id;
       const  username  = context.authenticatedUser.emailAddress;
       const { password } = context.authenticatedUser;
@@ -118,14 +121,13 @@ export default class CreateCourse extends Component {
       
       console.log(password);
       
-      const { title, author, description, estimatedTime, materialsNeeded } = this.state;
+      const { title, description, estimatedTime, materialsNeeded } = this.state;
 
     
 
       const course = {
         userId,
         title,
-        author,
         description,
         estimatedTime,
         materialsNeeded
@@ -150,6 +152,9 @@ export default class CreateCourse extends Component {
  
   }
 
+  /***
+   * Cancel button to push history to '/'
+   */
   cancel = () => {
     this.props.history.push('/');
 

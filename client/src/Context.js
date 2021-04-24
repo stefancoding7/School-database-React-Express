@@ -36,7 +36,12 @@ export class Provider extends Component {
       </Context.Provider>
     )
   }
-
+   /**
+    * Sign in authenticed user and save user object into cookie
+    * @param {string} username 
+    * @param {string} password 
+    * 
+    */
   signIn = async (username, password) => {
       const user = await this.data.getUser(username, password);
       if (user !== null) {
@@ -54,6 +59,9 @@ export class Provider extends Component {
       return user;
   }
 
+  /***
+   * Signout end remove cookie user object
+   */
   signOut = () => {
     this.setState({ authenticatedUser: null });
     Cookies.remove('authenticatedUser');

@@ -1,22 +1,30 @@
 import React, { Component } from "react";
 import { BrowserRouter,  Switch, Route } from 'react-router-dom';
 
+import Header from './components/Header';
+
+//for authenticate
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/SignIn';
-import Header from './components/Header';
-import NotFound from './components/NotFound';
+import UserSignOut from './components/UserSignOut';
+import Authenticated from './components/Authenticate';
 
+// context and private route
 import withContext from './Context';
 import PrivateRoute from './PrivateRoute';
 
+// all course componnents
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
-
-import Authenticated from './components/Authenticate';
-import UserSignOut from './components/UserSignOut';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 
+//error components
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
+import NotFound from './components/NotFound';
+
+// componenets with context
 const HeaderWithContext = withContext(Header);
 const AuthWithContext = withContext(Authenticated);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -70,6 +78,9 @@ class App extends Component {
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
+
+        <Route path="/forbidden" component={Forbidden} />
+        <Route path="/error" component={UnhandledError} />
         <Route component={NotFound} />
       </Switch>
        

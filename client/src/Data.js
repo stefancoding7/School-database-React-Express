@@ -40,6 +40,11 @@ export default class Data {
     }
   }
   
+  /**
+   * Create user funtion
+   * @param {string} user 
+   * @returns 
+   */
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -55,6 +60,15 @@ export default class Data {
     }
   }
 
+  /**
+   * Create user with course object
+   * 
+   * Authenticate required
+   * @param {object} course 
+   * @param {string} username 
+   * @param {string} password 
+   * @returns 
+   */
   async createCourse(course, username, password) {
     const response = await this.api('/courses', 'POST', course, true, { 
       username, 
@@ -73,6 +87,16 @@ export default class Data {
     }
   }
 
+  /**
+   * Update  course with id and course object
+   * Authenticate required
+   * 
+   * @param {num} id 
+   * @param {object} course 
+   * @param {string} username 
+   * @param {string} password 
+   * @returns 
+   */
   async updateCourse(id, course, username, password) {
     const response = await this.api(`/courses/${id}`, 'PUT', course, true, { 
       username, 
@@ -91,6 +115,15 @@ export default class Data {
     }
   }
 
+  /**
+   * Delete course with course id
+   * 
+   * Authenticate required
+   * @param {num} id 
+   * @param {string} username 
+   * @param {string} password 
+   * @returns 
+   */
   async deleteC(id, username, password) {
     const response = await this.api(`/courses/${id}`, 'DELETE', null, true, { 
       username, 

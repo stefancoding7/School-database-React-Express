@@ -24,8 +24,8 @@ export default class UserSignUp extends Component {
     
 
     return (
-      <div className="bounds">
-        <div className="grid-33 centered signin">
+     
+        <div className="form--centered">
           <h1>Sign Up</h1>
           <Form 
             cancel={this.cancel}
@@ -85,7 +85,7 @@ export default class UserSignUp extends Component {
             Already have a user account? <Link to="/signin">Click here</Link> to sign in!
           </p>
         </div>
-      </div>
+    
     );
   }
 
@@ -100,13 +100,16 @@ export default class UserSignUp extends Component {
     });
   }
 
+
+  /***
+   * Submit for user Sign up
+   * 
+   */
   submit = () => {
     
       const { context } = this.props;
       const { firstName, lastName, emailAddress, password } = this.state;
       
-    
-
       const user = {
         firstName,
         lastName,
@@ -114,6 +117,11 @@ export default class UserSignUp extends Component {
         password,
       };
 
+      /***
+       * Create user with context data
+       * Then end to createUser function
+       * 
+       */
       context.data.createUser(user)
       .then( errors => {
         if (errors.length) {

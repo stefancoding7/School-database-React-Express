@@ -22,7 +22,7 @@ export default class CreateCourse extends Component {
         const { context, history } = this.props;
         const courseId = this.props.match.params.id;
         const authUser = context.authenticatedUser;
-       // console.log(course.id);
+       
         axios(`http://localhost:5000/api/courses/${courseId}`)
             .then(data => {
                 
@@ -44,16 +44,17 @@ export default class CreateCourse extends Component {
                 }
             
             })
+            .catch((error) => {
+                console.log('Error: ', error);
+                
+                this.props.history.push('/notfound');
+            });
+           
     }
 
     
       render() {
-        const { context } = this.props;
-        const { history } = this.props;
-        const authUser = context.authenticatedUser;
-        const userFullName = `${authUser.firstName} ${authUser.lastName}`
-        
-
+       
         const {
           title,
           author,
@@ -145,7 +146,7 @@ export default class CreateCourse extends Component {
   }
 
   submit = () => {
-      const { context, history } = this.props;
+      const { context } = this.props;
       
       const userId = context.authenticatedUser.id;
       const  username  = context.authenticatedUser.emailAddress;
@@ -175,19 +176,19 @@ export default class CreateCourse extends Component {
                     this.setState({ errors });
                 } else {
                     
-                    this.props.history.push(`/course/${id}/update`)
+                    this.props.history.push('/');
 
                 }
                 })
                 .catch( err => { 
                 console.log(err);
-                this.props.history.push('/error'); // push to history stack
+                this.props.history.push('/error'); 
                 });  
         } else {
-            this.props.history.push('/forebidden'); // push to history stack
+            this.props.history.push('/forebidden'); 
         }
       } catch(error){
-            this.props.history.push('/forebidden'); // push to history stack
+            this.props.history.push('/forebidden'); 
       }
      
       
