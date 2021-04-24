@@ -126,9 +126,7 @@ export default class CreateCourse extends Component {
               
               </React.Fragment>
             )} />
-          <p>
-            Already have a user account? <Link to="/signin">Click here</Link> to sign in!
-          </p>
+         
        
       </div>
     );
