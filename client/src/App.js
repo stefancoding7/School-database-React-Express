@@ -72,8 +72,8 @@ class App extends Component {
         <Route exact path="/" component={CoursesWithContext} />
         <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
         <PrivateRoute path="/settings" component={AuthWithContext} />
-        <PrivateRoute path="/course/:id/update"component={UpdateCourseWithContext} />
-        <Route path="/course/:id" component={DetailedCoursesWithContext} />
+        <PrivateRoute exact path="/course/:id/update"component={UpdateCourseWithContext} />
+        <Route exact path="/course/:id" component={DetailedCoursesWithContext} />
         
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
