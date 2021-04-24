@@ -23,7 +23,7 @@ export default class CourseDetail extends Component {
               course: data.data,
               user: data.data.userOwner
             })
-            
+             
            
         })
         // .catch((error) => {
@@ -35,12 +35,13 @@ export default class CourseDetail extends Component {
     
 }
 
-    
+   
 
     render() {
     const { course } = this.state; 
     const { user } = this.state;
     const { authenticatedUser } = this.props.context;
+    const { id } = this.props.match.params;
     
   
         return(
@@ -52,7 +53,12 @@ export default class CourseDetail extends Component {
                     { authenticatedUser && 
                         user.id === authenticatedUser.id ? (
                             <>
-                            <a className="button" href="update-course.html">Update Course</a>
+                            <Link
+                            to={`/course/${id}/update/`}
+                            className='button button-secondary'
+                            >
+                            Update Course
+                            </Link>
                             <button className="button" onClick={this.deleteCourse}>Delte Course</button>
                             <Link
                             to='/'
