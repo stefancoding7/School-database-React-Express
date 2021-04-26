@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Form from './Form';
 import axios from 'axios';
 
@@ -183,10 +182,18 @@ export default class CreateCourse extends Component {
                 this.props.history.push('/error'); 
                 });  
         } else {
-            this.props.history.push('/forebidden'); 
+            this.props.history.push('/error'); 
         }
       } catch(error){
-            this.props.history.push('/forebidden'); 
+        if (error.status){
+          if(error.status === 404) {
+              this.props.history.push('/notfound')
+          } else if (error.status === 403) {
+              this.props.history.push('/forbidden')
+          } else {
+              this.props.history.push('/error')
+          }
+      } 
       }
      
       

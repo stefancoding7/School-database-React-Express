@@ -10,18 +10,28 @@ export default class Courses extends Component  {
     componentDidMount() {
             axios(`http://localhost:5000/api/courses`)
             .then(data => {
+                
                 if (data && Object.keys(data).length !== 0) {
                 this.setState({ 
                   courses: data.data,
                 })
                 }
+                
                
             })
-            // .catch((error) => {
-            //     console.log('Error: ', error);
+            .catch((error) => {
+                console.log('Error: ', error);
                 
-            //     this.props.history.push('/error');
-            // });
+                if (error.response.status){
+                    if(error.response.status === 404) {
+                        this.props.history.push('/notfound')
+                    } else if (error.response.status === 403) {
+                        this.props.history.push('/forbidden')
+                    } else {
+                        this.props.history.push('/error')
+                    }
+                }
+            });
            
         
     }

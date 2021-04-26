@@ -16,21 +16,29 @@ export default class CourseDetail extends Component {
     componentDidMount() {
         const course = this.props.match.params;
        // console.log(course.id);
-        axios(`http://localhost:5000/api/courses/${course.id}`)
-        .then(data => {
+        axios.get(`http://localhost:5000/api/courses/${course.id}`) 
+        .then(response => {
             
             this.setState({ 
-              course: data.data,
-              user: data.data.userOwner
-            })
-             
-           
+                user: response.data.userOwner,
+                course: response.data,  
+            })  
+                
         })
-        .catch((error) => {
-            console.log('Error: ', error);
-            
-            this.props.history.push('/notfound');
-        });
+        .catch(error => {
+            console.log('Error:' + error);
+            if (error.response.status){
+                if(error.response.status === 404) {
+                    this.props.history.push('/notfound')
+                } else if (error.response.status === 403) {
+                    this.props.history.push('/forbidden')
+                } else {
+                    this.props.history.push('/error')
+                }
+            }
+               
+          })
+       
        
     
 }
@@ -42,8 +50,7 @@ export default class CourseDetail extends Component {
     const { user } = this.state;
     const { authenticatedUser } = this.props.context;
     const { id } = this.props.match.params;
-    
-  
+
         return(
             <React.Fragment>
            
@@ -96,7 +103,7 @@ export default class CourseDetail extends Component {
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{ course.title }</h4>
                             <p>By { user.firstName + ' ' + user.lastName }</p>
-                             { course.description } 
+                            <ReactMarkdown>{course.description}</ReactMarkdown>
                             
                         </div>
                         <div>

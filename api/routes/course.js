@@ -63,8 +63,12 @@ const asyncHandler = require('../middleware/asyncHandler')
         },
       ],
     });
-
-    res.json(course);
+    if(course) {
+      res.status(200).json(course)
+    } else {
+      res.status(404).json({ message: "Course not found" })
+    }
+    
   })
 );
 
@@ -100,6 +104,8 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
  * code
  */
 router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
+
+  try{
     const user = req.currentUser;
     
     const course = await Courses.findByPk(req.params.id);
@@ -111,6 +117,16 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
             res.status(403).json({ message: "Sorry you cant update this course" })
         }
     }
+  } catch(error) {
+    console.error(`Error: ${error.name}`);
+    if (error.name === "SequelizeValidationError") {
+      const errors = error.errors.map((err) => err.message);
+      res.status(400).json({ errors });
+    } else {
+      throw error;
+    }
+  }
+    
 }));
 
 

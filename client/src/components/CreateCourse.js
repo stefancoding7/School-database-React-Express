@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class CreateCourse extends Component {
@@ -115,10 +114,6 @@ export default class CreateCourse extends Component {
       const userId = context.authenticatedUser.id;
       const  username  = context.authenticatedUser.emailAddress;
       const { password } = context.authenticatedUser;
-      console.log(context);
-      
-      console.log(password);
-      
       const { title, description, estimatedTime, materialsNeeded } = this.state;
 
     
@@ -130,24 +125,32 @@ export default class CreateCourse extends Component {
         estimatedTime,
         materialsNeeded
       };
-      console.log(course);
+     
       context.data.createCourse(course, username, password)
-      .then( errors => {
+      .then( (errors) => {  
         if (errors.length) {
           this.setState({ errors });
+          
         } else {
           
           this.props.history.push("/")
            
-
         }
       })
-      .catch( err => { 
-        console.log(err);
-        this.props.history.push('/error'); // push to history stack
+      .catch( error => { 
+        console.log('Error:' + error);
+        if (error.status){
+          if(error.status === 404) {
+              this.props.history.push('/notfound')
+          } else if (error.status === 403) {
+              this.props.history.push('/forbidden')
+          } else {
+              this.props.history.push('/error')
+          }
+      }
       });  
      
- 
+
   }
 
   /***

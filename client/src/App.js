@@ -5,7 +5,7 @@ import Header from './components/Header';
 
 //for authenticate
 import UserSignUp from './components/UserSignUp';
-import UserSignIn from './components/SignIn';
+import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import Authenticated from './components/Authenticate';
 
@@ -64,9 +64,10 @@ class App extends Component {
 
   render(){
     return (
+      <div>
       <BrowserRouter>
       <HeaderWithContext />
-      <div>
+      
       
       <Switch>
         <Route exact path="/" component={CoursesWithContext} />
@@ -78,16 +79,18 @@ class App extends Component {
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
-
+        
+        <Route path="/notfound" component={NotFound} />
         <Route path="/forbidden" component={Forbidden} />
         <Route path="/error" component={UnhandledError} />
         <Route component={NotFound} />
       </Switch>
        
 
-      </div>
+     
           
       </BrowserRouter>
+      </div>
     )
   }
     
