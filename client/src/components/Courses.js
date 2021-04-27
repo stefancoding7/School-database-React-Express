@@ -21,7 +21,7 @@ export default class Courses extends Component  {
             })
             .catch((error) => {
                 console.log('Error: ', error);
-                
+                console.log(error.response.status);
                 if (error.response.status){
                     if(error.response.status === 404) {
                         this.props.history.push('/notfound')

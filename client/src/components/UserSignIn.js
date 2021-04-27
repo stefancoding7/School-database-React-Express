@@ -19,7 +19,7 @@ export default class UserSignIn extends Component {
     return (
       
         <div className="form--centered">
-          <h1>Sign In</h1>
+          <h2>Sign In</h2>
           <Form 
             cancel={this.cancel}
             errors={errors}

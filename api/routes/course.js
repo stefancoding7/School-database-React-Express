@@ -18,28 +18,34 @@ const asyncHandler = require('../middleware/asyncHandler')
  * each course and a 200 HTTP status code
  */
  router.get('/courses', asyncHandler(async (req, res) => {
-    const course = await Courses.findAll({
-      attributes: [
-        "id",
-        "title",
-        "description",
-        "estimatedTime",
-        "materialsNeeded",
-      ],
-      include: [
-        {
-          as: 'userOwner',
-          model: Users,
-          attributes: ["id", "firstName", "lastName", "emailAddress"],
+   
+      try{
+        const course = await Courses.findAll({
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "estimatedTime",
+            "materialsNeeded",
+          ],
+          include: [
+            {
+              as: 'userOwner',
+              model: Users,
+              attributes: ["id", "firstName", "lastName", "emailAddress"],
+            }
+          ]
+        });
+        
+        if(course) {
+          res.status(200).json(course)
+        } else {
+          res.status(404).json({ message: "Course not found" })
         }
-      ]
-    });
-
-    if(course) {
-      res.status(200).json(course)
-    } else {
-      res.status(404).json({ message: "Course not found" })
-    }
+      } catch(error) {
+        throw error;
+      }
+      
 }))
 
 /***
@@ -68,7 +74,6 @@ const asyncHandler = require('../middleware/asyncHandler')
     } else {
       res.status(404).json({ message: "Course not found" })
     }
-    
   })
 );
 
