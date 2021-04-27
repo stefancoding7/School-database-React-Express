@@ -27,7 +27,7 @@ export default class Courses extends Component  {
                         this.props.history.push('/notfound')
                     } else if (error.response.status === 403) {
                         this.props.history.push('/forbidden')
-                    } else {
+                    } else if (error.response.status === 500) {
                         this.props.history.push('/error')
                     }
                 }

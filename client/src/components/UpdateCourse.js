@@ -39,7 +39,7 @@ export default class CreateCourse extends Component {
                 const { courseUser } = this.state;
             
                 if(authUser.id !== courseUser.id) {
-                    history.push('/forebidden')
+                    history.push('/forbidden')
                 }
             
             })
@@ -202,7 +202,8 @@ export default class CreateCourse extends Component {
   }
 
   cancel = () => {
-    this.props.history.push('/');
+    const id = this.props.match.params.id;
+    this.props.history.push(`/course/${id}`);
 
   }
 }
